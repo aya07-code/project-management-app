@@ -1,7 +1,7 @@
 FROM node:18
 WORKDIR /app
-COPY package.json package-lock.json ./ 
-RUN npm install                         
-COPY . .                                
-EXPOSE 8000
-CMD ["npm", "start"]
+COPY package.json .
+RUN npm install
+COPY . .
+CMD ["node", "server.js"]
+EXPOSE 4005

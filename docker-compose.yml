@@ -1,25 +1,37 @@
 version: '3.8'
-
 services:
   mongodb:
-    image: mongo:6
+    image: mongo
     container_name: mongodb
-    restart: always
     ports:
       - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
 
-  collaboration-service:
-    build: ./collaboration-service
-    container_name: collaboration-service
-    restart: always
+  auth-service:
+    build: ./Service_auth
+    ports:
+      - "5000:5000
+    depends_on:
+      - mongodb
+      
+  project-service:
+    build: ./project-service
     ports:
       - "8000:8000"
     depends_on:
       - mongodb
-    environment:
-      - MONGO_URL=mongodb://mongodb:27017/collaboration-service
 
-volumes:
-  mongodb_data:
+  task-service:
+    build: ./task-service
+    ports:
+      - "5002:5002
+    depends_on:
+      - mongodb
+
+  collaboration-service:
+    build: ./collaboration-service
+    ports:
+      - "4005:4005"
+  reporting-service:
+  build: ./reporting-service
+  ports:
+    - "4006:4006"
